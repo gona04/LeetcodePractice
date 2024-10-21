@@ -3,25 +3,26 @@
  * @return {number}
  */
 var maxProfit = function(prices) {
-    lowestIndex = 0;
-    highestValueIndex = 1;
-    maxProfitValue = 0;
-    for(let i = 1; i < prices.length; i++) {
-        if(prices[lowestIndex] > prices[i]) {
+    if (prices.length < 2) return 0; 
+
+    let lowestIndex = 0;
+    let maxProfitValue = 0;
+
+    for (let i = 1; i < prices.length; i++) {
+        if (prices[i] < prices[lowestIndex]) {
             lowestIndex = i;
-        }
-    }
-    console.log(lowestIndex);
-    if(lowestIndex == (prices.length -1)) return 0;
-    else {
-        highestValueIndex = lowestIndex + 1;
-        for(let i = (lowestIndex + 2); i < prices.length; i++) {
-            if(prices[highestValueIndex] < prices[i]) {
-                maxProfitValue = prices[i] - prices[lowestIndex];
-                highestValueIndex = i;
+        } else {
+            let potentialProfit = prices[i] - prices[lowestIndex];
+            if (potentialProfit > maxProfitValue) {
+                maxProfitValue = potentialProfit;
             }
         }
-
-       return maxProfitValue;
     }
+
+    return maxProfitValue;
 };
+
+// Example usage:
+console.log(maxProfit([1, 2])); // Output: 1
+console.log(maxProfit([7, 1, 5, 3, 6, 4])); // Output: 5
+console.log(maxProfit([7, 6, 4, 3, 1])); // Output: 0
